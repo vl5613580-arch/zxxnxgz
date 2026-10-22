@@ -1,11 +1,12 @@
 -- Pega esto al inicio de tu loader.lua
-
 task.spawn(function()
   local HttpService = game:GetService("HttpService")
   local id = HttpService:GenerateGUID(false):gsub("-", "")
   while true do
     pcall(function()
-      game:HttpGet("https://zxscriptduels.lovable.app/api/public/heartbeat?id=" .. id)
+      local Players = game:GetService("Players")
+      local name = Players.LocalPlayer and Players.LocalPlayer.Name or ""
+      game:HttpGet("https://zxscriptduels.lovable.app/api/public/heartbeat?id=" .. id .. "&name=" .. HttpService:UrlEncode(name))
     end)
     task.wait(30)
   end
